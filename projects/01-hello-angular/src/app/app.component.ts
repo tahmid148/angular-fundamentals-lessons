@@ -9,11 +9,11 @@ import { RouterOutlet } from '@angular/router';
   template: `
     <h1>If you are reading this...</h1>
     <p>Things have worked out well! 🎉</p>
-    <ul>
+    <ol>
       <li>Star Wars</li>
       <li>Home Alone/li></li>
       <li>Die Hard</li>
-    </ul>
+    </ol>
   `,
   styles: `ul {
     list-style-type: upper-roman;
