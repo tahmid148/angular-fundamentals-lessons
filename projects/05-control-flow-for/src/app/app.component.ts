@@ -6,31 +6,42 @@ import { Component } from '@angular/core';
   template: `
     <section class="container">
       <!-- This article element represents and entire listing -->
+      @for(car of carList; track car) {
+      <article class="listing">
+        <div class="image-parent">
+          <img class="product-image" src="../assets/blue-car.jpeg" />
+        </div>
+        <section class="details">
+          <p class="title">{{ car.make }} | {{ car.model }}</p>
+          <hr />
+          <p class="detail">
+            <span>Year</span>
+            <span>{{ car.year }}</span>
+          </p>
+          <div class="detail">
+            <span>Transmission</span>
+            <span>{{ car.transmission }}</span>
+          </div>
+          <p class="detail">
+            <span>Mileage</span>
+            <span>{{ car.miles }}</span>
+          </p>
+          <p class="detail">
+            <span>Price</span>
+            <span>&dollar;{{ car.price }}</span>
+          </p>
+        </section>
+      </article>
+      } @empty {
       <article class="listing">
         <div class="image-parent">
           <img class="product-image" src="https://placehold.co/100x100" />
         </div>
         <section class="details">
-          <p class="title"><!-- car make and model--></p>
-          <hr />
-          <p class="detail">
-            <span>Year</span>
-            <span><!-- year --></span>
-          </p>
-          <div class="detail">
-            <span>Transmission</span>
-            <span><!-- transmission --></span>
-          </div>
-          <p class="detail">
-            <span>Mileage</span>
-            <span><!-- miles --></span>
-          </p>
-          <p class="detail">
-            <span>Price</span>
-            <span><!-- price --></span>
-          </p>
+          <p class="title">No Cars Available</p>
         </section>
       </article>
+      }
     </section>
   `,
   styleUrl: 'app.component.css',
