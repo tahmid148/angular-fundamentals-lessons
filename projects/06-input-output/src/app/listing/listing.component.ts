@@ -12,23 +12,23 @@ import { Car } from '../car';
         <img class="product-image" src="https://placehold.co/100x100" />
       </div>
       <section class="details">
-        <p class="title">{{ car?.make }} {{ car?.model }}</p>
+        <p class="title">{{ car.make }} {{ car.model }}</p>
         <hr />
         <p class="detail">
           <span>Year</span>
-          <span>{{ car?.year }}</span>
+          <span>{{ car.year }}</span>
         </p>
         <div class="detail">
           <span>Transmission</span>
-          <span>{{ car?.transmission }}</span>
+          <span>{{ car.transmission }}</span>
         </div>
         <p class="detail">
           <span>Mileage</span>
-          <span>{{ car?.miles }}</span>
+          <span>{{ car.miles }}</span>
         </p>
         <p class="detail">
           <span>Price</span>
-          <span>{{ car?.price }}</span>
+          <span>{{ car.price }}</span>
         </p>
       </section>
       <button (click)="saveCar()">Save</button>
@@ -37,7 +37,7 @@ import { Car } from '../car';
   styles: ``,
 })
 export class ListingComponent {
-  @Input() car: Car | undefined;
+  @Input({ required: true }) car!: Car;
 
   @Output() savedCar = new EventEmitter<Car>();
 
