@@ -9,9 +9,7 @@ export class UserService {
 
   constructor() {}
 
-  getUserData(): Promise<User[]> {
-    return new Promise((resolve) => {
-      resolve(this.userData);
-    });
+  async getUserData(): Promise<any> {
+    return (await fetch('https://jsonplaceholder.typicode.com/users')).json();
   }
 }

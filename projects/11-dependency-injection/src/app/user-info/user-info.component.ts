@@ -1,16 +1,33 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { User } from '../data';
+import { RouterModule } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-user-info',
   standalone: true,
   template: `
-    <p>{{ user.id }} {{ user.email }}</p>
+    <p>{{ user?.id }} {{ user?.email }}</p>
     <!-- add more properties to customize -->
   `,
   styles: ``,
+  imports: [RouterModule],
 })
 export class UserInfoComponent {
+  userService = inject(UserService);
+  userId = -1;
+
+  @Input()
+  set id(value: number) {
+    this.userId = value;
+  }
+
+  ngOnInit() {
+    this.userService.getUserData().then((data: User[]) => {
+      this.user = data[this.userId++];
+    });
+  }
+
   // Test user data
   @Input()
   user: User = {
