@@ -1,4 +1,10 @@
-import { Component, effect, signal } from '@angular/core';
+import {
+  Component,
+  WritableSignal,
+  computed,
+  effect,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Todo } from './todo';
 
@@ -7,12 +13,13 @@ import { Todo } from './todo';
   standalone: true,
   imports: [CommonModule],
   template: ` <h1>Building a TODO List</h1>
+    <p>Completed Todos: {{ completedTodos() }}</p>
     @for(todo of todos(); track todo){
     <label
       [ngStyle]="{
         'text-decoration': todo.completed ? 'line-through' : 'none'
       }"
-      >{{ todo.title }}fw</label
+      >{{ todo.title }}</label
     >
     <input
       type="checkbox"
@@ -23,7 +30,7 @@ import { Todo } from './todo';
   styles: `label { display: block }`,
 })
 export class AppComponent {
-  todos = signal<Todo[]>([
+  todos: WritableSignal<Todo[]> = signal<Todo[]>([
     {
       id: 1,
       title: 'Learn Angular',
@@ -41,6 +48,13 @@ export class AppComponent {
     },
   ]);
 
+  completedTodos = computed(() => {
+    return this.todos().reduce((acc, current) => {
+      if (current.completed) return acc + 1;
+      return acc;
+    }, 0);
+  });
+
   updateTodo(todo: Todo) {
     this.todos.update((todoList) => {
       todoList.map((todoEntry) => {
@@ -48,6 +62,7 @@ export class AppComponent {
           todoEntry.completed = !todo.completed;
         }
       });
+      this.todos.set([]); // For some reason, update doesn't notify my computed value, only set seems to work for this
       return todoList;
     });
   }
